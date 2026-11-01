@@ -18,7 +18,7 @@
 | Model | Access | Role in the product |
 |---|---|---|
 | **openai/gpt-oss-120b** (open-weight, Apache-2.0) | Groq API | Main model for demos and examples. Explains what each side of a conflict is trying to do and suggests a resolution, based on the provenance data (origin commit, tested / production status). |
-| **openai/gpt-oss-20b** (open-weight, Apache-2.0) | Groq API | Same role during development and testing. Faster, and keeps the main model's rate limit free for the demo. |
+| **openai/gpt-oss-20b** (open-weight, Apache-2.0) | Groq API | Judges ambiguous identity matches (identity ladder level L5, `git prov analyze --llm`), and does the drafting role during development and testing. Faster, and keeps the main model's rate limit free for the demo. |
 | **Qwen2.5-Coder 7B** (open-weight) | Ollama, running locally | Offline fallback when the hosted API or network is unavailable. |
 
 **Why these models:**

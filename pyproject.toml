@@ -1,0 +1,34 @@
+[project]
+name = "git-prov"
+version = "0.1.0"
+description = "Git conflict resolution with testing provenance"
+requires-python = ">=3.11"
+dependencies = ["typer>=0.12", "rich>=13", "pydantic>=2.6"]
+
+[project.optional-dependencies]
+llm = ["openai>=1.30"]
+ast = ["tree-sitter>=0.23", "tree-sitter-language-pack>=0.2"]
+match = ["scipy>=1.11"]
+all = ["git-prov[llm,ast,match]"]
+dev = ["git-prov[all]", "pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+git-prov = "prov.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["prov*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008", "E501", "UP042"]  # typer.Option defaults are idiomatic; models keep (str, Enum) per docs/03

@@ -1,0 +1,11 @@
+shop/billing.py#0 strategy=take_theirs gates=failed
+OURS:   The dev version adds a rate multiplier but lacks rounding; it has only 
+TESTED_ELSEWHERE evidence, weaker than production‑verified rounding.
+THEIRS: Production‑verified code rounds totals and tax to two decimals, matching
+the fix that was deployed and tested in prod and UAT.
+
+        s += round(price * qty, 2)
+
+def tax(amount):
+    return round(amount * 0.18, 2)
+gate: shop/billing.py: duplicate top-level definitions tax

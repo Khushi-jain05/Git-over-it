@@ -1,0 +1,22 @@
+$ git prov apply --hunk shop/billing.py#1 --take theirs --hash 372f9438bc…
+shop/billing.py#1: took theirs; 1 hunk(s) left in file
+$ git prov apply --hunk shop/billing.py#0 --take theirs --hash 657f52b515…
+shop/billing.py#0: took theirs; 0 hunk(s) left in file (staged)
+
+$ git prov commit
+committed 8f7d9bd2e2
+Prov-Change-Id: Ifa2ba2b1add059bc5fc8effe3c2a0a3ae5803483
+Prov-Resolved: shop/billing.py theirs=PROD_VERIFIED hunks=2
+Prov-Evidence: notes
+
+$ git log -1
+8f7d9bd Fix rounding in totals
+
+(cherry picked from commit 97add13962e4084bcb1de22bbde1670bee047aa5)
+Prov-Change-Id: Ifa2ba2b1add059bc5fc8effe3c2a0a3ae5803483
+Prov-Resolved: shop/billing.py theirs=PROD_VERIFIED hunks=2
+Prov-Evidence: notes
+
+$ git notes --ref=prov/resolutions show HEAD
+{"at":"2026-11-01T00:32:44.151750Z","change_id":"Ifa2ba2b1add059bc5fc8effe3c2a0a3ae5803483","commit":"8f7d9bd2e2f227089bbc0f3c4e9b1be89bb9bb68","decisions":[{"choice":"theirs","hunk_id":"shop/billing.py#1","llm_model":null,"llm_prompt_hash":null,"ours_badge":"TESTED_ELSEWHERE","theirs_badge":"PROD_VERIFIED"},{"choice":"theirs","hunk_id":"shop/billing.py#0","llm_model":null,"llm_prompt_hash":null,"ours_badge":"TESTED_ELSEWHERE","theirs_badge":"PROD_VERIFIED"}],"gates":{"no_dup_defs":true,"no_markers":true,"parse":true,"tests":true},"operation":"cherry-pick","source":"97add13962e4084bcb1de22bbde1670bee047aa5","v":1}
+{"rerere":{"postimage":"\"\"\"Billing helpers.\"\"\"\n\n\ndef total(items, rate=0.0):\n    s = 0\n    for price, qty in items:\n        s += round(price * qty, 2)\n    return s\n\n\ndef describe(items):\n    \"\"\"Human summary of a basket.\"\"\"\n    return f\"{len(items)} items\"\n\n\ndef tax(amount):\n    return round(amount * 0.18, 2)\n","preimage":"\"\"\"Billing helpers.\"\"\"\n\n\ndef total(items, rate=0.0):\n    s = 0\n    for price, qty in items:\n<<<<<<<\n        s += price * qty * (1 + rate)\n=======\n        s += round(price * qty, 2)\n>>>>>>>\n    return s\n\n\ndef describe(items):\n    \"\"\"Human summary of a basket.\"\"\"\n    return f\"{len(items)} items\"\n\n\n<<<<<<<\ndef tax(amount):\n    return round(amount * 0.18, 2)\n=======\ndef tax(amount, rate=0.18):\n    return amount * rate\n>>>>>>>\n","rr_id":"bbba93db52c6b6ea579d9d353351072536b80411"}}

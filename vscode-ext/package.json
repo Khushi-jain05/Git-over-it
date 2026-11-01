@@ -1,0 +1,49 @@
+{
+  "name": "git-prov",
+  "displayName": "git prov — conflict provenance",
+  "description": "See where each side of a conflict came from, where it was tested, and which side is production-proven.",
+  "version": "0.1.2",
+  "publisher": "git-over-it",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/git-over-it/git-prov" },
+  "engines": { "vscode": "^1.90.0" },
+  "categories": ["SCM Providers", "Other"],
+  "activationEvents": ["workspaceContains:.git"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "gitProv.analyze", "title": "git prov: Analyze conflicts" },
+      { "command": "gitProv.acceptOurs", "title": "git prov: Accept OURS for hunk" },
+      { "command": "gitProv.acceptTheirs", "title": "git prov: Accept THEIRS for hunk" },
+      { "command": "gitProv.explain", "title": "git prov: Explain and draft (LLM)" },
+      { "command": "gitProv.acceptDraft", "title": "git prov: Accept draft for hunk" },
+      { "command": "gitProv.showEvidence", "title": "git prov: Show evidence chain" },
+      { "command": "gitProv.mergiraf", "title": "git prov: Auto-solve structural conflicts" },
+      { "command": "gitProv.commit", "title": "git prov: Run gates and commit" },
+      { "command": "gitProv.sync", "title": "git prov: Sync provenance notes" }
+    ],
+    "configuration": {
+      "title": "git prov",
+      "properties": {
+        "gitProv.path": { "type": "string", "default": "git-prov", "description": "Path to the git-prov executable" },
+        "gitProv.autoAnalyze": { "type": "boolean", "default": true },
+        "gitProv.llmIdentity": { "type": "boolean", "default": false, "description": "Use the LLM judge (L5) during analysis" },
+        "gitProv.runTestsOnCommit": { "type": "boolean", "default": true }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -w -p .",
+    "test": "npm run compile && node --test out/test/format.test.js",
+    "test:integration": "npm run compile && node out/test/runIntegration.js",
+    "package": "npm run compile && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/test-electron": "^2.4.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,23 @@
+# git prov config for the testing-7 benchmark (passed via $PROV_CONFIG; the repo's working tree stays untouched)
+schema_version = 1
+
+[environments]
+"main" = "prod"
+"uat" = "uat"
+"release/*" = "release"
+"develop" = "dev"
+
+[index]
+# scenario pairs and pre-rewrite tips are tags; feature/hotfix lines carry no environment
+extra_refs = ["refs/tags/scenario/", "refs/tags/archive/", "refs/remotes/origin/feature/", "refs/remotes/origin/hotfix/"]
+
+[provenance]
+read_refs = ["ci", "deploy"]   # refs/notes/provenance holds origin *claims*, which are not evidence
+
+[identity]
+window_days = 3650
+
+[gates]
+# the README's validator test layers, in order
+test_command = "@PYTHON@ manage.py test tests --settings=campus.settings.test -p 'test_[!z]*.py' --noinput && @PYTHON@ manage.py test tests --settings=campus.settings.test -p 'test_zz*.py' --noinput"
+test_timeout_s = 900

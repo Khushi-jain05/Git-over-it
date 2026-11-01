@@ -1,0 +1,23 @@
+# git prov config for the testing-6 benchmark (passed via $PROV_CONFIG; the repo's working tree stays untouched)
+schema_version = 1
+
+[environments]
+"main" = "prod"
+"uat" = "uat"
+"release/*" = "release"
+"develop" = "dev"
+
+[index]
+# scenario pairs and pre-rewrite tips are tags; feature/hotfix lines carry no environment
+extra_refs = ["refs/tags/scenario/", "refs/tags/archive/", "refs/remotes/origin/feature/", "refs/remotes/origin/hotfix/"]
+
+[provenance]
+read_refs = ["ci", "deploy"]   # refs/notes/provenance holds origin *claims*, which are not evidence
+
+[identity]
+window_days = 3650
+
+[gates]
+# the README's validator test layers, in order
+test_command = "make -s build test-c PY=@PYTHON@ && @PYTHON@ -m pytest -q -p no:cacheprovider tests --ignore-glob='tests/test_zz*' && @PYTHON@ -m pytest -q -p no:cacheprovider tests/test_zz*.py"
+test_timeout_s = 900

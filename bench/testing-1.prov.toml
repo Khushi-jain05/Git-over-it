@@ -1,0 +1,22 @@
+# git prov config for the testing-1 benchmark (passed via $PROV_CONFIG; the repo's working tree stays untouched)
+schema_version = 1
+
+[environments]
+"main" = "prod"
+"uat" = "uat"
+"release/*" = "release"
+"develop" = "dev"
+
+[index]
+# scenario pairs are published as tags; feature/hotfix lines carry no environment
+extra_refs = ["refs/tags/scenario/", "refs/remotes/origin/feature/", "refs/remotes/origin/hotfix/"]
+
+[provenance]
+read_refs = ["ci", "deploy"]   # refs/notes/provenance holds origin *claims*, which are not evidence
+
+[identity]
+window_days = 3650
+
+[gates]
+test_command = "@PYTHON@ manage.py test tests --settings=storefront.settings.test --noinput"
+test_timeout_s = 600

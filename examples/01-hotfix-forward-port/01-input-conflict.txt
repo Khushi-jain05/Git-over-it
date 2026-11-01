@@ -1,0 +1,53 @@
+$ git log --oneline --graph --all -12
+* f62bdfb Refactor pricing helpers
+| * 97add13 Fix rounding in totals
+|/  
+| * cc4499b Fix rounding in totals
+|/  
+* 37e00c8 Initial shop
+* 07cfe1b Notes added by 'git notes add'
+* 246e508 Notes added by 'git notes add'
+* 4831fb7 Notes added by 'git notes add'
+* 1c770b7 Notes added by 'git notes add'
+* 6c6ffd7 Notes added by 'git notes add'
+
+$ git status --short
+UU shop/billing.py
+
+$ git diff  (the conflict)
+diff --cc shop/billing.py
+index a6569c1,1404281..0000000
+--- a/shop/billing.py
++++ b/shop/billing.py
+@@@ -1,10 -1,10 +1,16 @@@
+  """Billing helpers."""
+  
+  
+ -def total(items):
+ +def total(items, rate=0.0):
+      s = 0
+      for price, qty in items:
+++<<<<<<< HEAD
+ +        s += price * qty * (1 + rate)
+++||||||| parent of 97add13 (Fix rounding in totals)
+++        s += price * qty
+++=======
++         s += round(price * qty, 2)
+++>>>>>>> 97add13 (Fix rounding in totals)
+      return s
+  
+  
+@@@ -13,5 -13,5 +19,13 @@@ def describe(items)
+      return f"{len(items)} items"
+  
+  
+++<<<<<<< HEAD
+ +def tax(amount, rate=0.18):
+ +    return amount * rate
+++||||||| parent of 97add13 (Fix rounding in totals)
+++def tax(amount):
+++    return amount * 0.18
+++=======
++ def tax(amount):
++     return round(amount * 0.18, 2)
+++>>>>>>> 97add13 (Fix rounding in totals)

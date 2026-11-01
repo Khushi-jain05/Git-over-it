@@ -1,0 +1,19 @@
+cherry-pick of 97add13 onto f62bdfb  metadata: recorded
+
+shop/billing.py (content)
+  shop/billing.py#0  lines 7-13  hash 657f52b515
+    OURS    TESTED-ELSEWHERE  f62bdfb Refactor pricing helpers — Riya
+            · dev test PASSED  via f62bdfb on dev (self)
+    THEIRS  PROD-VERIFIED  97add13 Fix rounding in totals — Arjun
+            · prod deploy PASSED  via 97add13 on production (self)
+            · uat test PASSED (same tree as cc4499b)  via cc4499b on production (self)
+            · reachable from uat  via cc4499b on uat (L0_trailer)
+    → take_theirs: THEIRS is PROD_VERIFIED; OURS is TESTED_ELSEWHERE
+  shop/billing.py#1  lines 22-31  hash 372f9438bc
+    OURS    TESTED-ELSEWHERE  f62bdfb Refactor pricing helpers — Riya
+            · dev test PASSED  via f62bdfb on dev (self)
+    THEIRS  PROD-VERIFIED  97add13 Fix rounding in totals — Arjun
+            · prod deploy PASSED  via 97add13 on production (self)
+            · uat test PASSED (same tree as cc4499b)  via cc4499b on production (self)
+            · reachable from uat  via cc4499b on uat (L0_trailer)
+    → take_theirs: THEIRS is PROD_VERIFIED; OURS is TESTED_ELSEWHERE

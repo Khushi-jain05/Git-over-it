@@ -1,0 +1,64 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  repo-files:
+    # hackathon requirements: these files must exist on every commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Required files
+        run: |
+          for f in LICENSE HACKATHON.md .github/pull_request_template.md .github/workflows/ci.yml; do
+            test -f "$f" || { echo "missing $f"; exit 1; }
+          done
+          grep -q "MIT License" LICENSE
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Package present?
+        id: pkg
+        run: echo "present=$([ -f pyproject.toml ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        if: steps.pkg.outputs.present == 'true'
+        with: { python-version: "3.11" }
+      - name: Install
+        if: steps.pkg.outputs.present == 'true'
+        run: |
+          pip install -e ".[dev]"
+          git config --global user.name ci && git config --global user.email ci@example.com
+      - name: Lint
+        if: steps.pkg.outputs.present == 'true'
+        run: ruff check .
+      - name: Unit and end-to-end tests
+        if: steps.pkg.outputs.present == 'true'
+        run: pytest -q
+      - name: Validate the CLI on a simulated dev/uat/prod repo
+        if: hashFiles('prov/cli.py') != '' && hashFiles('scripts/make_sim_repo.py') != ''
+        run: |
+          python scripts/make_sim_repo.py /tmp/sim --scenario 1 --stop-at-conflict
+          cd /tmp/sim
+          git prov doctor --json
+          git prov analyze --json > /tmp/report.json
+          python -c "import json; r = json.load(open('/tmp/report.json')); assert r['files'] and r['schema_version'] == 1, r; print('analyze ok:', [f['path'] for f in r['files']])"
+
+  vscode-ext:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extension present?
+        id: ext
+        run: echo "present=$([ -f vscode-ext/package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        if: steps.ext.outputs.present == 'true'
+        with: { node-version: "20" }
+      - name: Install, compile, test
+        if: steps.ext.outputs.present == 'true'
+        working-directory: vscode-ext
+        run: npm ci && npm test

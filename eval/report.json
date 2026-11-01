@@ -1,0 +1,211 @@
+{
+ "identity": {
+  "django": {
+   "repo": "django",
+   "trailers": false,
+   "llm": false,
+   "pairs": 342,
+   "index_seconds": 0.0,
+   "seconds_per_commit": 0.152,
+   "metrics": {
+    "all": {
+     "precision": 0.997,
+     "recall": 0.9854,
+     "f1": 0.9912,
+     "tp": 337,
+     "predicted": 338,
+     "positives": 342
+    },
+    "edited": {
+     "precision": 0.994,
+     "recall": 0.9708,
+     "f1": 0.9822,
+     "tp": 166,
+     "predicted": 167,
+     "positives": 171
+    },
+    "unedited": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 171,
+     "predicted": 171,
+     "positives": 171
+    },
+    "negatives": 51,
+    "false_positive_on_negatives": 0,
+    "by_level": {
+     "L1_patch_id": {
+      "predicted": 172,
+      "tp": 171,
+      "precision": 0.9942
+     },
+     "L2_hunks": {
+      "predicted": 158,
+      "tp": 158,
+      "precision": 1.0
+     },
+     "L3_fuzzy": {
+      "predicted": 8,
+      "tp": 8,
+      "precision": 1.0
+     }
+    }
+   }
+  },
+  "cpython": {
+   "repo": "cpython",
+   "trailers": false,
+   "llm": false,
+   "pairs": 300,
+   "index_seconds": 0.1,
+   "seconds_per_commit": 0.513,
+   "metrics": {
+    "all": {
+     "precision": 0.9611,
+     "recall": 0.9067,
+     "f1": 0.9331,
+     "tp": 272,
+     "predicted": 283,
+     "positives": 300
+    },
+    "edited": {
+     "precision": 0.9248,
+     "recall": 0.82,
+     "f1": 0.8693,
+     "tp": 123,
+     "predicted": 133,
+     "positives": 150
+    },
+    "unedited": {
+     "precision": 0.9551,
+     "recall": 0.9933,
+     "f1": 0.9739,
+     "tp": 149,
+     "predicted": 156,
+     "positives": 150
+    },
+    "negatives": 75,
+    "false_positive_on_negatives": 6,
+    "by_level": {
+     "L1_patch_id": {
+      "predicted": 150,
+      "tp": 149,
+      "precision": 0.9933
+     },
+     "L2_hunks": {
+      "predicted": 128,
+      "tp": 118,
+      "precision": 0.9219
+     },
+     "L3_fuzzy": {
+      "predicted": 5,
+      "tp": 5,
+      "precision": 1.0
+     }
+    }
+   }
+  }
+ },
+ "trailers": {
+  "django": {
+   "precision": 1.0,
+   "recall": 0.9971,
+   "f1": 0.9985,
+   "tp": 341,
+   "predicted": 341,
+   "positives": 342
+  },
+  "cpython": {
+   "precision": 0.9737,
+   "recall": 0.9867,
+   "f1": 0.9801,
+   "tp": 296,
+   "predicted": 304,
+   "positives": 300
+  }
+ },
+ "replay": {
+  "django": {
+   "picks": 59,
+   "clean": 9,
+   "conflicts": 50,
+   "auto_mergiraf": 0,
+   "auto_mergiraf_llm": 0,
+   "exact": 0,
+   "ast_equal": 0,
+   "auto": 0,
+   "llm": false,
+   "drafts": 0,
+   "gates_passed": 0,
+   "median_seconds": 4.47
+  },
+  "cpython": {
+   "picks": 40,
+   "clean": 10,
+   "conflicts": 30,
+   "auto_mergiraf": 0,
+   "auto_mergiraf_llm": 0,
+   "exact": 0,
+   "ast_equal": 0,
+   "auto": 0,
+   "llm": false,
+   "drafts": 0,
+   "gates_passed": 0,
+   "median_seconds": 17.375
+  }
+ },
+ "safety": {
+  "sides": 20,
+  "coverage": 0.8,
+  "false_prod_verified": 0,
+  "fresh_clone_never_recorded": true,
+  "scenarios": {
+   "1": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": [
+     "inferred",
+     "none"
+    ]
+   },
+   "2": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": [
+     "inferred",
+     "none"
+    ]
+   },
+   "3": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": [
+     "none"
+    ]
+   },
+   "4": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": [
+     "inferred",
+     "none"
+    ]
+   },
+   "5": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": [
+     "inferred",
+     "none"
+    ]
+   },
+   "6": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": [
+     "inferred",
+     "none"
+    ]
+   },
+   "7": {
+    "false_prod_verified": 0,
+    "tiers_without_notes": []
+   }
+  }
+ }
+}
